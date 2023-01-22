@@ -1,5 +1,7 @@
 import { React, useState, useEffect } from 'react';
-import themes from './theme.json';
+import { Link } from "react-router-dom";
+
+{/* <Link to={`/achievements`}><input type="button" value="Achievements" /></Link> */}
 
 export default function Navbar() {
     const [theme, setTheme] = useState(document.documentElement.getAttribute('data-theme'));
@@ -10,8 +12,13 @@ export default function Navbar() {
 
     function handleThemeClick(event) {
         event.preventDefault();
-        localStorage.setItem('theme', event.target.name);
-        setTheme(event.target.name);
+        var tempTheme = theme;
+        if (tempTheme === 'cupcake')
+            tempTheme = 'forest';
+        else
+            tempTheme = 'cupcake';
+        localStorage.setItem('theme', tempTheme);
+        setTheme(tempTheme);
         updateTheme();
     }
 
@@ -25,7 +32,7 @@ export default function Navbar() {
 
     return (
         <>
-            <div className="navbar bg-base-100">
+            <div className="navbar bg-base-100 drop-shadow-md sticky top-0 z-5 backDropCustom">
                 <div className="flex-1 sm:flex-initial">
                     <a className="btn btn-ghost normal-case text-xl" href="/">Rtrade</a>
                 </div>
@@ -35,25 +42,21 @@ export default function Navbar() {
                     </div>
                 </div>
                 <div className="flex-none gap-2">
-                    <div className="dropdown dropdown-end">
-                        <label tabIndex={0} className="btn btn-ghost btn-circle">
-                            <div className="indicator">
-                                <img alt="theme" src={themes[theme]} />
-                            </div>
-                        </label>
-                        <div tabIndex={0} className="drop-shadow mt-3 card card-compact dropdown-content w-52 bg-base-100 shadow">
-                            <div className="card-body">
-                                <button name="light" className="font-bold text-lg hover:bg-accent rounded" onClick={handleThemeClick}>Light</button>
-                                <button name="dark" className="font-bold text-lg hover:bg-accent rounded" onClick={handleThemeClick}>Dark</button>
-                                <button name="cupcake" className="font-bold text-lg hover:bg-accent rounded" onClick={handleThemeClick}>Cupcake</button>
-                                <button name="synthwave" className="font-bold text-lg hover:bg-accent rounded" onClick={handleThemeClick}>Synthwave</button>
-                                <button name="halloween" className="font-bold text-lg hover:bg-accent rounded" onClick={handleThemeClick}>Halloween</button>
-                                <button name="forest" className="font-bold text-lg hover:bg-accent rounded" onClick={handleThemeClick}>Forest</button>
-                                <button name="night" className="font-bold text-lg hover:bg-accent rounded" onClick={handleThemeClick}>Night</button>
-                                <button name="coffee" className="font-bold text-lg hover:bg-accent rounded" onClick={handleThemeClick}>Coffee</button>
-                            </div>
+                    <label tabIndex={0} className="btn btn-ghost btn-circle">
+                        <div className="indicator" onClick={handleThemeClick}>
+                            {
+                                (theme === "forest") ?
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style={{ "fill": "rgba(255, 255, 255, 1)" }}>
+                                        <path d="M6.995 12c0 2.761 2.246 5.007 5.007 5.007s5.007-2.246 5.007-5.007-2.246-5.007-5.007-5.007S6.995 9.239 6.995 12zM11 19h2v3h-2zm0-17h2v3h-2zm-9 9h3v2H2zm17 0h3v2h-3zM5.637 19.778l-1.414-1.414 2.121-2.121 1.414 1.414zM16.242 6.344l2.122-2.122 1.414 1.414-2.122 2.122zM6.344 7.759 4.223 5.637l1.415-1.414 2.12 2.122zm13.434 10.605-1.414 1.414-2.122-2.122 1.414-1.414z">
+                                        </path>
+                                    </svg> :
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style={{ "fill": "rgba(0, 0, 0, 1)" }}>
+                                        <path d="M12 11.807A9.002 9.002 0 0 1 10.049 2a9.942 9.942 0 0 0-5.12 2.735c-3.905 3.905-3.905 10.237 0 14.142 3.906 3.906 10.237 3.905 14.143 0a9.946 9.946 0 0 0 2.735-5.119A9.003 9.003 0 0 1 12 11.807z">
+                                        </path>
+                                    </svg>
+                            }
                         </div>
-                    </div>
+                    </label>
                     <div className="drop-shadow dropdown dropdown-end">
                         <label tabIndex={0} className="btn btn-ghost btn-circle">
                             <div className="indicator">
@@ -90,8 +93,8 @@ export default function Navbar() {
                     </div>
                 </div>
             </div>
-            <div className="navbar bg-base-100">
-                <div className="flex-1 justify-center sm:hidden">
+            <div className="navbar bg-base-100 sm:hidden">
+                <div className="flex-1 justify-center ">
                     <div className="form-control w-full">
                         <input type="text" placeholder="Search" className="input input-bordered" />
                     </div>
