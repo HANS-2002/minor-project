@@ -1,14 +1,16 @@
-/** @type {import('tailwindcss').Config} */
+const { join } = require('path');
+
 module.exports = {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
+    join(__dirname, './app/**/*.{js,ts,jsx,tsx}'),
+    join(__dirname, './pages/**/*.{js,ts,jsx,tsx}'),
+    join(__dirname, './src/**/*.{js,ts,jsx,tsx}'),
+    join(__dirname, './lib/**/*.{js,ts,jsx,tsx}'),
   ],
   theme: {
     extend: {},
   },
   plugins: [require("daisyui")],
-
-  // daisyUI config (optional)
   daisyui: {
     styled: true,
     base: true,
@@ -16,6 +18,36 @@ module.exports = {
     logs: true,
     rtl: false,
     prefix: "",
-    themes: ["light", "dark", "cupcake", "bumblebee", "emerald", "corporate", "synthwave", "retro", "cyberpunk", "valentine", "halloween", "garden", "forest", "aqua", "lofi", "pastel", "fantasy", "wireframe", "black", "luxury", "dracula", "cmyk", "autumn", "business", "acid", "lemonade", "night", "coffee", "winter"],
+    themes: [
+      "light",
+      "dark",
+      "cupcake",
+      "bumblebee",
+      "emerald",
+      "corporate",
+      "synthwave",
+      "retro",
+      "cyberpunk",
+      "valentine",
+      "halloween",
+      "garden",
+      "forest",
+      "aqua",
+      "lofi",
+      "pastel",
+      "fantasy",
+      "wireframe",
+      "black",
+      "luxury",
+      "dracula",
+      "cmyk",
+      "autumn",
+      "business",
+      "acid",
+      "lemonade",
+      "night",
+      "coffee",
+      "winter",
+    ],
   },
-}
+};
