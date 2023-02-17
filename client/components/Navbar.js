@@ -8,7 +8,16 @@ import {
   setPersistence,
   browserLocalPersistence,
 } from "firebase/auth";
-import { initFirebase } from "../config";
+import { initFirebase } from "../firebaseConfig";
+import { db } from "@/firebaseConfig";
+import {
+  collection,
+  doc,
+  addDoc,
+  query,
+  getDocs,
+  where,
+} from "firebase/firestore";
 import Link from "next/link";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { BiSearchAlt } from "react-icons/bi";
@@ -50,6 +59,23 @@ export default function Navbar() {
     signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
+        // console.log(user);
+        const Query = query(
+          collection(db, "users"),
+          where("user_id", "==", user.uid)
+        );
+        getDocs(Query).then((docs) => {
+          if (docs.size === 0) {
+            addDoc(collection(db, "users"), {
+              user_id: user.uid,
+              user_name: user.displayName,
+              user_email: user.email,
+              user_avatar: user.photoURL,
+              user_tagline: 'Write a nice tagline!',
+              user_passage: 'Write something about yourself here!',
+            });
+          }
+        });
       })
       .catch((error) => {
         console.log({
@@ -59,17 +85,11 @@ export default function Navbar() {
       });
   }
 
-  function handleAccountClick(event) {
-    event.preventDefault();
-    console.log(auth.currentUser);
-  }
-
   function handleLogoutClick() {
     signOut(auth)
       .then(() => {
         // Sign-out successful.
-        console.log("signed out successfully");
-        changeLoginStatus(false);
+        // console.log("signed out successfully");
       })
       .catch((error) => {
         // An error happened.
@@ -77,13 +97,13 @@ export default function Navbar() {
       });
   }
   if (loading) {
-    return <>Loading....</>;
+    return <></>;
   }
   if (user) {
-    console.log(user);
+    // console.log(user);
     return (
       <>
-        <div className="navbar bg-base-100 drop-shadow-md sticky top-0 z-5 backDropCustom">
+        <div className="navbar bg-base-100 drop-shadow-md sticky top-0 z-999 backDropCustom">
           <div className="flex-1 sm:flex-initial">
             <Link href={"/"} className="btn btn-ghost normal-case text-xl">
               Rtrade
@@ -153,7 +173,7 @@ export default function Navbar() {
             </label>
           </div>
           <div className="flex-none gap-2 dropdown dropdown-end dropdown-hover">
-            <label tabIndex={0} className="btn btn-ghost btn-circle">
+            <label tabIndex={0} className="btn btn-ghost btn-circle flex align-middle justify-center">
               <div className="indicator">
                 <img className="btn btn-ghost btn-circle" src={user.photoURL} />
               </div>
@@ -177,7 +197,7 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="navbar bg-base-100 drop-shadow-md sticky top-0 z-5 backDropCustom">
+      <div className="navbar bg-base-100 drop-shadow-md sticky top-0 z-999 backDropCustom">
         <div className="flex-1 sm:flex-initial">
           <Link href={"/"} className="btn btn-ghost normal-case text-xl">
             Rtrade
