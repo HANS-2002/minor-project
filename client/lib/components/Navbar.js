@@ -1,14 +1,13 @@
 "use client";
 import { React, useState, useEffect } from "react";
 import {
-  getAuth,
   signOut,
   signInWithPopup,
   GoogleAuthProvider,
   setPersistence,
   browserLocalPersistence,
 } from "firebase/auth";
-import { initFirebase } from "../config";
+import { initFirebase, auth } from "../config";
 import Link from "next/link";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { BiSearchAlt } from "react-icons/bi";
@@ -16,7 +15,6 @@ import { BiSearchAlt } from "react-icons/bi";
 export default function Navbar() {
   initFirebase();
   const provider = new GoogleAuthProvider();
-  const auth = getAuth();
   setPersistence(auth, browserLocalPersistence);
   const [user, loading] = useAuthState(auth);
   const [theme, setTheme] = useState(
