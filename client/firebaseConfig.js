@@ -21,7 +21,6 @@ export const db = getFirestore(app);
 export const initFirebase = () => {
   return app;
 };
-export const db = getFirestore(app);
 export const analytics = isSupported().then(yes => yes ? getAnalytics(app) : null);
 export default app;
 export const photoAPI = `https://api.unsplash.com/photos?client_id={process.env.unsplashKey}`
