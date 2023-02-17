@@ -1,7 +1,7 @@
 // "use client";
 import Render from "../lib/components/rendergallery";
 
-export default function Page() {
+export default function IndexPage() {
   return (
     <>
       <h1 className="text-3xl font-bold underline ml-5">
