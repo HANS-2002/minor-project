@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.mainDiv {
+  min-height: calc(100vh - 109px);
+}
+
+.tweetBox {
+  width: 400px;
+  height: 100px;
+  border-radius: 10px;
+  padding: 10px;
+}
