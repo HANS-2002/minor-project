@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export default function Main() {
   return (
     <>
@@ -32,12 +34,39 @@ export default function Main() {
                   alert("Please enter a tweet");
                   return;
                 }
-                const sentimentText = document.querySelector(".sentimentText");
-                sentimentText.innerHTML = "Good 😄";
-                const textArea = document.querySelector("textarea");
-                textArea.className =
-                  "w-full lg:w-1/3 h-1/5 textarea rounded-lg textarea-bordered border-4 border-green-600";
-                // textArea.className = "w-full lg:w-1/3 h-1/5 textarea rounded-lg textarea-bordered border-4 border-red-600";
+                axios
+                  .post("https://sentiment-n7hrhmnsfa-as.a.run.app/", {
+                    text: tweet,
+                  })
+                  .then(function (response) {
+                    // setPrediction(response.data['prediction']);
+                    console.log(response.data["prediction"]);
+                    if (response.data["prediction"] === "NEG") {
+                      const sentimentText =
+                        document.querySelector(".sentimentText");
+                      sentimentText.innerHTML = "Bad 😞";
+                      const textArea = document.querySelector("textarea");
+                      textArea.className =
+                        "w-full lg:w-1/3 h-1/5 textarea rounded-lg textarea-bordered border-4 border-red-600";
+                    } else if (response.data["prediction"] === "POS") {
+                      const sentimentText =
+                        document.querySelector(".sentimentText");
+                      sentimentText.innerHTML = "Good 😄";
+                      const textArea = document.querySelector("textarea");
+                      textArea.className =
+                        "w-full lg:w-1/3 h-1/5 textarea rounded-lg textarea-bordered border-4 border-green-600";
+                    } else {
+                      const sentimentText =
+                        document.querySelector(".sentimentText");
+                      sentimentText.innerHTML = "Neutral 😐";
+                      const textArea = document.querySelector("textarea");
+                      textArea.className =
+                        "w-full lg:w-1/3 h-1/5 textarea rounded-lg textarea-bordered border-4 border-yellow-600";
+                    }
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  });
               }}
             >
               Predict Sentiment
