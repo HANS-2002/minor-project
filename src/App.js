@@ -1,14 +1,13 @@
-import Navbar from "./components/Navbar/navbar";
-import Footer from "./components/footer";
 import Main from "./components/main";
+import { auth } from "./firebaseConfig";
+import { useAuthState } from "react-firebase-hooks/auth";
+
+import Signin from "./components/Signin";
 
 function App() {
+  const [user, loading] = useAuthState(auth);
   return (
-    <>
-      <Navbar />
-      <Main />
-      <Footer />
-    </>
+    <>{loading ? <></> : !user ? <Signin /> : <Main email={user.email} />}</>
   );
 }
 
