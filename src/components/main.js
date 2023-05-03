@@ -1,5 +1,4 @@
 import axios from "axios";
-import AnalysisRow from "./analysisRow";
 import { useEffect, useState } from "react";
 import { db } from "../firebaseConfig";
 import { collection, query, where, getDocs, setDoc } from "firebase/firestore";
@@ -87,12 +86,12 @@ export default function Main(props) {
   return (
     <>
       <div className="flex lg:flex-row flex-col items-center justify-center py-2 mainDiv">
-        <main className="flex flex-col items-center justify-center w-full lg:w-3/4 flex-1 px-4 lg:px-20 text-center">
+        <main className="flex flex-col items-center justify-center w-full lg:w-2/4 flex-1 px-4 lg:px-20 text-center">
           <div className="w-full mb-4">
             <p className="sentimentText">ㅤㅤ</p>
           </div>
           <textarea
-            className="w-full lg:w-1/3 h-1/5 textarea rounded-lg textarea-bordered border-4"
+            className="w-full lg:w-2/3 h-1/5 textarea rounded-lg textarea-bordered border-4"
             placeholder="Enter your tweet here"
             style={{ outline: "none", resize: "none" }}
             onFocus={(e) => {
@@ -106,7 +105,7 @@ export default function Main(props) {
                 "w-full lg:w-1/3 h-1/5 textarea rounded-lg textarea-bordered border-4";
             }}
           ></textarea>
-          <div className="mt-4 w-full lg:w-1/3 lg:justify-center lg:flex btn-group btn-group-vertical lg:btn-group-horizontal">
+          <div className="mt-4 w-full lg:w-2/3 lg:justify-center lg:flex btn-group btn-group-vertical lg:btn-group-horizontal">
             <button
               className="btn bg-lime-600 hover:bg-lime-800 lg:w-2/3"
               style={{ borderRadius: "0" }}
@@ -126,37 +125,39 @@ export default function Main(props) {
             </button>
           </div>
         </main>
-        <div className="w-full lg:w-1/4 m-4">
+        <div className="w-full lg:w-2/4 m-4">
           <p className="text-center font-bold mb-4">Your Recent Analysis</p>
-          <table>
-            <thead>
-              <tr>
-                <th>Text</th>
-                <th>Sentiment</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {sentiments.length > 0
-                ? sentiments.map((val, index) => {
-                    return (
-                      <tr key={index}>
-                        <td>{val.text}</td>
-                        <td>{val.sentiment}</td>
-                        <td>
-                          <button
-                            className="btn btn-ghost btn-sm rounded-btn"
-                            onClick={() => deleteSentiment(index)}
-                          >
-                            <span className="text-xl">🗑️</span>
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })
-                : null}
-            </tbody>
-          </table>
+          <div className="overflow-x-auto">
+            <table className="table w-full">
+              <thead>
+                <tr>
+                  <th>Text</th>
+                  <th>Sentiment</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {sentiments.length > 0
+                  ? sentiments.map((val, index) => {
+                      return (
+                        <tr key={index}>
+                          <td className="truncate overflow-hidden whitespace-nowrap max-w-xs">{val.text}</td>
+                          <td>{val.sentiment}</td>
+                          <td>
+                            <button
+                              className="btn btn-ghost btn-sm rounded-btn"
+                              onClick={() => deleteSentiment(index)}
+                            >
+                              <span className="text-xl">🗑️</span>
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })
+                  : null}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </>
