@@ -62,7 +62,7 @@ export default function Main(props) {
         const sentimentText = document.querySelector(".sentimentText");
         sentimentText.innerHTML = senti;
         const textArea = document.querySelector("textarea");
-        textArea.className = `w-full lg:w-1/3 h-1/5 textarea rounded-lg textarea-bordered border-4 border-${color}-600`;
+        textArea.className = `w-full lg:w-2/3 h-1/5 textarea rounded-lg textarea-bordered border-4 border-${color}-600`;
       })
       .catch(function (error) {
         console.log(error);
@@ -97,12 +97,12 @@ export default function Main(props) {
             onFocus={(e) => {
               e.preventDefault();
               e.target.className =
-                "w-full lg:w-1/3 h-1/5 textarea border-violet-800 rounded-lg textarea-bordered border-4";
+                "w-full lg:w-2/3 h-1/5 textarea border-violet-800 rounded-lg textarea-bordered border-4";
             }}
             onBlur={(e) => {
               e.preventDefault();
               e.target.className =
-                "w-full lg:w-1/3 h-1/5 textarea rounded-lg textarea-bordered border-4";
+                "w-full lg:w-2/3 h-1/5 textarea rounded-lg textarea-bordered border-4";
             }}
           ></textarea>
           <div className="mt-4 w-full lg:w-2/3 lg:justify-center lg:flex btn-group btn-group-vertical lg:btn-group-horizontal">
